@@ -4,7 +4,7 @@
 <div class="content">
     <div class="row">
         <div class="col">
-            <h1 class="badge bg-primary fs-1"> Reports </h1>
+            <h1 class="badge bg-primary fs-1"> All Reports </h1>
         </div>
     </div>
 
@@ -14,8 +14,12 @@
                 @foreach ($expenseReports as $expenseReport)
                     <tr>
                         <td><a href="/expenseReports/{{$expenseReport->id}}">{{$expenseReport->title}}</a></td>
-                        <td><a href="/expenseReports/{{$expenseReport->id}}/edit">Edit</a></td>
-                        <td><a href="/expenseReports/{{$expenseReport->id}}/confirmDelete">Delete</a></td>
+                        <td>
+                            <a class="btn btn-primary" href="/expenseReports/{{$expenseReport->id}}/edit">Edit</a>
+                            
+                            <button class="btn btn-danger" onclick="ConfirmDelete({{$expenseReport->id}})" >Delete</button>
+                        </td>
+                        {{-- <a href="/expenseReports/{{$expenseReport->id}}/confirmDelete"></a> --}}
                     </tr>
                 @endforeach
             </table>
@@ -30,6 +34,37 @@
 
 @endsection
 
+<script>
 
+    function ConfirmDelete(id){
+
+        let reportAnswer = confirm('Do you want to continue?');
+
+        if(reportAnswer == true)
+        {
+            var token = $("meta[name='csrf-token']").attr("content");
+
+            $.ajax({
+                headers: {
+                    "_token": token
+                },
+                type: "get",
+                url: "/expenseReports/"+id+"/del",
+
+                success: function(data) {
+                    if(data.message == 'success'){
+                        alert("Delete completed");
+                        window.location.href = "/expenseReports/";
+                    }
+                },
+                error: function(error) {
+                    console.log("error", error)
+                }
+            });
+        }
+    }
+
+
+</script>
 
 

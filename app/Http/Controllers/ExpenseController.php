@@ -38,8 +38,10 @@ class ExpenseController extends Controller
     public function store(Request $request, $id)
     {
 
-        $validData = $request->validate(['description'=>'required|string|max:255','Amount'=>'required|numeric|min:50']);
-
+        $validData = $request->validate(
+            ['description'=>'required|string|max:255',
+            'Amount'=>'required|numeric|min:50']
+        );
 
         $expense= new Expense();
         $expense->description = $request->post('description');
@@ -48,6 +50,19 @@ class ExpenseController extends Controller
         $expense->save();
 
         return redirect('/expenseReports/'.$id);
+    }
+
+    public function editDetails(Request $request, $id){
+
+        return view('Expense.edit');
+        
+        $expense = Expense::findOrFail($id);
+        $expense->description = $request->post('description');
+        $expense->amount = $request->post('Amount');
+        $expense->expense_report_id = $id;
+        $expense->save();
+        return redirect('/expenseReports/'.$id);
+
 
 
     }
@@ -94,7 +109,7 @@ class ExpenseController extends Controller
      */
     public function destroy($id)
     {
-        //
+      //
     }
 
 

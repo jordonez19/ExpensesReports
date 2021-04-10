@@ -14,23 +14,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index'); //home
+Route::get('/dashboard','DashboardController@index'); //home
 
-Route::get('/dashboard','DashboardController@index');
+Route::resource('/expenseReports', 'ExpenseReportController'); // reports
 
-Route::resource('/expenseReports', 'ExpenseReportController');
+Route::get('/expenseReports/{id}/del', 'ExpenseReportController@deleteExpanseReportIndex'); //delete index
+Route::get('/expenseReports/{id}/delete', 'ExpenseReportController@deleteExpanseReport');//delete details
 
-Route::get('/expenseReports/{id}/confirmDelete', 'ExpenseReportController@confirmDelete');
+Route::get('/expenseReports/{expenseReports}/expenses/create', 'ExpenseController@create'); // new expense
 
-Route::get('/expenseReports/{expenseReports}/expenses/create', 'ExpenseController@create');
 
-Route::post('/expenseReports/{expenseReports}/expenses', 'ExpenseController@store');
 
-Route::post('/expenseReports/{id}/sendEmail', 'ExpenseReportController@SendEmail');
 
-Route::get('/expenseReports/{id}/confirmSendEmail', 'ExpenseReportController@confirmSendEmail');
+Route::get('/expenseReports/{expenseReports}/expenses/editDetails', 'ExpenseController@editDetails'); // edit expense
 
+
+
+
+
+
+Route::post('/expenseReports/{expenseReports}/expenses', 'ExpenseController@store'); // expense created
+
+Route::post('/expenseReports/{id}/sendEmail', 'ExpenseReportController@SendEmail'); //send mail
+Route::get('/expenseReports/{id}/confirmSendEmail', 'ExpenseReportController@confirmSendEmail');// confirm send mail
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+// Route::get('/expenseReports/{{$id}}/expenses/editDetails', 'ExpenseController@store');
+
+
+
+
 

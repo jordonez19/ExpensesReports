@@ -14,7 +14,7 @@ class ExpenseReportController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -22,11 +22,7 @@ class ExpenseReportController extends Controller
      */
     public function index()
     {
-        return view('ExpenseReports.index',
-        [
-            'expenseReports'=>ExpenseReport::all()
-        ]);
-
+        return view('ExpenseReports.index',['expenseReports'=>ExpenseReport::all()]);
     }
 
     /**
@@ -48,15 +44,19 @@ class ExpenseReportController extends Controller
      */
     public function store(Request $request)
     {
-        $validData = $request->validate(['title'=>'required|min:3']);
         //dd($validData);
+        $validData = $request->validate(['title'=>'required|min:3']);
         $report = new ExpenseReport();
         $report->title = $request->get('title');
         $report->save();
 
         //return $request->all();
         return redirect('/expenseReports');
+
     }
+
+
+
 
     /**
      * Display the specified resource.
@@ -68,7 +68,7 @@ class ExpenseReportController extends Controller
     {
         $report = ExpenseReport::findOrFail($id);
         return view('ExpenseReports.show',
-        ['report' => $report]);
+        ['report' => $report, "id" => $id]);
     }
     /**
      * Show the form for editing the specified resource.
@@ -104,18 +104,7 @@ class ExpenseReportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $report = ExpenseReport::findOrFail($id);
-        $report->delete();
 
-        return redirect('/expenseReports');
-    }
-
-    public function confirmDelete($id){
-            $report = ExpenseReport::find($id);
-            return view('ExpenseReports.confirmDelete',['report'=> $report]);
-    }
 
     public function confirmSendEmail($id){
         $report = ExpenseReport::find($id);
@@ -129,5 +118,36 @@ class ExpenseReportController extends Controller
 
         return redirect('/expenseReports/'.$id);
     }
+
+
+
+
+
+    public function destroy($id)
+    {
+        $report = ExpenseReport::findOrFail($id);
+        $report->delete();
+    }
+
+    public function deleteExpanseReportIndex($id)
+    {
+        $report = ExpenseReport::findOrFail($id);
+        $report->delete();
+        return response()->json([
+            "message" => "success"
+        ]);
+    }
+
+    public function deleteExpanseReport($id)
+    {
+        $report = Expense::findOrFail($id);
+        $report->delete();
+        return response()->json([
+            "message" => "success"
+        ]);
+    }
 }
+
+
+
 

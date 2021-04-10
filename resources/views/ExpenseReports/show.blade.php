@@ -17,8 +17,12 @@
                 @foreach ($report->expenses as $expense)
                     <tr>
                         <td><li> {{$expense->description}} </li></td>
-                        <td><li> {{$expense->created_at}} </li></td>
-                        <td><li> {{$expense->amount}} </li></td>
+                        <td><li  > {{$expense->created_at}} </li></td>
+                        <td><li> ${{$expense->amount}} </li></td>
+                        <td>
+                            <a href="/expenseReports/{{$id}}/expenses/editDetails"><button class="btn btn-primary"> Edit </button></a>
+                            <button class="btn btn-danger" onclick="handleConfirmDelete({{$expense->id}})"> Delete </button>
+                        </td>
                     </tr>
                 @endforeach
             </table>
@@ -34,3 +38,38 @@
     </div>
 </div>
 @endsection
+
+<script>
+
+    function handleConfirmDelete(id)
+    {
+        let answer = confirm('Do you want to continue?');
+
+        if(answer == true)
+        {
+            var token = $("meta[name='csrf-token']").attr("content")
+
+            $.ajax({
+                headers: {
+                    "_token": token
+                },
+                type: "get",
+                url: "/expenseReports/"+id+"/delete",
+
+                success: function(data) {
+                    if(data.message == 'success'){
+                        alert("Delete completed");
+                        window.location.href = "/expenseReports/"+{{$id}};
+                    }
+                },
+
+                error: function(error) {
+                    console.log("error", error)
+                }
+            });
+        }
+
+    }
+</script>
+
+
