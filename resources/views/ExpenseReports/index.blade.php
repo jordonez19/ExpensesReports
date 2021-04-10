@@ -7,16 +7,16 @@
             <h1 class="badge bg-primary fs-1"> All Reports </h1>
         </div>
     </div>
-
+<br>
     <div class="row">
         <div class="col">
-            <table class="table">
+            <table class="table table-hover table-light">
                 @foreach ($expenseReports as $expenseReport)
                     <tr>
-                        <td><a href="/expenseReports/{{$expenseReport->id}}">{{$expenseReport->title}}</a></td>
+                        <td><a class="h3 text-decoration-none text-dark text-capitalize " href="/expenseReports/{{$expenseReport->id}}">{{$expenseReport->title}}</a></td>
                         <td>
                             <a class="btn btn-primary" href="/expenseReports/{{$expenseReport->id}}/edit">Edit</a>
-                            
+
                             <button class="btn btn-danger" onclick="ConfirmDelete({{$expenseReport->id}})" >Delete</button>
                         </td>
                         {{-- <a href="/expenseReports/{{$expenseReport->id}}/confirmDelete"></a> --}}

@@ -22,7 +22,10 @@ class ExpenseReportController extends Controller
      */
     public function index()
     {
-        return view('ExpenseReports.index',['expenseReports'=>ExpenseReport::all()]);
+        return view('ExpenseReports.index',
+        [
+            'expenseReports'=>ExpenseReport::all()
+        ]);
     }
 
     /**
@@ -55,6 +58,14 @@ class ExpenseReportController extends Controller
 
     }
 
+    public function editDetails(Request $request, $id){
+        return $id;
+        $id = $report = ExpenseReport::findOrFail($id);
+        // $validData = $request->validate(['title'=>'required|min:3']);
+        $report = Expense::findOrFail($id);
+        return view('Expense.edit');
+
+    }
 
 
 

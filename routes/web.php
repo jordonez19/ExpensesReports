@@ -23,11 +23,12 @@ Route::get('/expenseReports/{id}/del', 'ExpenseReportController@deleteExpanseRep
 Route::get('/expenseReports/{id}/delete', 'ExpenseReportController@deleteExpanseReport');//delete details
 
 Route::get('/expenseReports/{expenseReports}/expenses/create', 'ExpenseController@create'); // new expense
+Route::put('/expenseReports/{expenseReports}/expenses/update/{id}', 'ExpenseController@update'); // new expense
 
 
 
 
-Route::get('/expenseReports/{expenseReports}/expenses/editDetails', 'ExpenseController@editDetails'); // edit expense
+Route::get('/expenseReports/{id}/expenses/editDetails/{detail_id}', 'ExpenseController@editDetails'); // edit expense
 
 
 

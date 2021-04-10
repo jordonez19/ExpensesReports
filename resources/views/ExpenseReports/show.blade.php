@@ -12,15 +12,15 @@
     </div>
     <div class="row">
         <div class="col">
-            <h2>Details:</h2>
+            <h1>Details:</h1>
             <table class="table">
                 @foreach ($report->expenses as $expense)
                     <tr>
-                        <td><li> {{$expense->description}} </li></td>
-                        <td><li  > {{$expense->created_at}} </li></td>
-                        <td><li> ${{$expense->amount}} </li></td>
+                        <td><li class=" h4 text-capitalize" > {{$expense->description}} </li></td>
+                        <td><li class="h4" > {{$expense->created_at}} </li></td>
+                        <td><li class="h4" > ${{$expense->amount}} </li></td>
                         <td>
-                            <a href="/expenseReports/{{$id}}/expenses/editDetails"><button class="btn btn-primary"> Edit </button></a>
+                            <a href="/expenseReports/{{$id}}/expenses/editDetails/{{$expense->id}}"><button class="btn btn-primary"> Edit </button></a>
                             <button class="btn btn-danger" onclick="handleConfirmDelete({{$expense->id}})"> Delete </button>
                         </td>
                     </tr>

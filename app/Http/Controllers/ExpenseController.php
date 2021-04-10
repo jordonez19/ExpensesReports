@@ -52,18 +52,11 @@ class ExpenseController extends Controller
         return redirect('/expenseReports/'.$id);
     }
 
-    public function editDetails(Request $request, $id){
-
-        return view('Expense.edit');
-        
-        $expense = Expense::findOrFail($id);
-        $expense->description = $request->post('description');
-        $expense->amount = $request->post('Amount');
-        $expense->expense_report_id = $id;
-        $expense->save();
-        return redirect('/expenseReports/'.$id);
-
-
+    public function editDetails(Request $request, $id, $detail_id)
+    {
+        return $detail_id;
+        $report = Expense::find($detail_id);
+        return view('Expense.edit', compact('report'));
 
     }
 
